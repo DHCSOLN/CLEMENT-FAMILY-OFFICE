@@ -1,0 +1,17 @@
+{
+  ".gitignore": "d0fc69648a6324ef66f032712b68ae1f0f24a2a954daa8308da38a45c6a6057b",
+  ".openai/hosting.json": "1d1b04ca7b4b6b962a6eb57a635568141faf68752b3d28f048d051b2b2247111",
+  "README.md": "e9bf9221e6ea86a1118e06249e317fbfbe4978ec7f1fbf66a1910d6a8440fbc3",
+  "package.json": "5314513e9a77e1bf5602ae4db24ef674bbaf6e6dbc9a006eccd852b33b66f5a5",
+  "scripts/assemble.py": "a44abd19c42edcdaf2f01319aa65ca01d56f057dc8235af0f8363c1eb4b832e7",
+  "scripts/build.sh": "1e2d54f1520f8f1077224b9ffdb51e632959166eddced83fe660993d5acd4c72",
+  "scripts/make-templates.py": "607479b82e87ac8c99be9f7410d308576bf40b30c6b81601c4feb66707a260ff",
+  "scripts/test-office.mjs": "030c8e2419a5b0b351340ebbb4f8975d9d2dbc8e5d9c7c6a9b9b064abb7f939c",
+  "scripts/validate-artifact.mjs": "39d9df53ac2461962466d5965c5f4d06f08024ceca40605952d8b753b88d41fd",
+  "src/agreement-templates.json": "54aa6fe74552a6dc0491d27ff71185f31a6ff42e86480bd53e45d2c608429ce4",
+  "src/backend.js": "65a73abfb8c448d0977d28f07189d0e7e2b55685180cf4bec56e22acc88f3710",
+  "src/base.html": "318ad40cc1687513964e05ce54766d596386a784879686b3ae51e8a8bae96a4b",
+  "src/office.js": "82e23cacb853ae618370de29c6bc4e8ea2234174a9e11a673ab4d5eb635b74c8",
+  "worker/index.js": "4dc64e7779e182873b162a4491a088539fa1b79c54ba3de92a6c170858972f34",
+  "GITHUB_SETUP.md": "48ce08f51297bcfac9ed84cf3cb4b5dd94b31857f8d0abe7a72e5d7990879e15"
+}
