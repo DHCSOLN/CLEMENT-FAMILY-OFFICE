@@ -1,6 +1,6 @@
 name: Automated Cloud-to-Cloud Deployment Pipeline
 
-on:    
+on:
   push:
     branches:
       - main
