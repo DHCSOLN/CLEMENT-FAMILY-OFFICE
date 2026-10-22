@@ -16,6 +16,8 @@ jobs:
       - name: Checkout Code Repository
         uses: actions/checkout@v4
 
+      # Add compilation/build steps here if your Lambda uses Node, Python dependencies, or Go/Java.
+
       - name: Authenticate Securely with AWS Infrastructure
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -24,5 +26,5 @@ jobs:
 
       - name: Deploy Live Lambda Engine Updates
         run: |
-          zip -r function.zip .
+          zip -r function.zip . -x "*.git*" "*.github*"
           aws lambda update-function-code --function-name soln-visa-connection-bridge --zip-file fileb://function.zip
