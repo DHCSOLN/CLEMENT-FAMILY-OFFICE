@@ -1,38 +1,63 @@
-name: Automated Cloud-to-Cloud Deployment Pipeline
+
+name: Clement Family Office AWS Lambda Deployment
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 permissions:
   id-token: write
   contents: read
 
 jobs:
-  DeployInfrastructure:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Code Repository
+      - name: Checkout GitHub Repository
         uses: actions/checkout@v4
 
-      - name: Authenticate Securely with AWS Infrastructure
+      - name: Extract AWS Application ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p extracted-aws
+
+          unzip -q CLEMENT_FAMILY_OFFICE_AWS.zip \
+            -d extracted-aws
+
+          echo "Extracted application files:"
+          find extracted-aws -maxdepth 3 -type f \
+            | head -80
+
+      - name: Connect GitHub to AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::944870884457:role/GitHub_Cloud_Deployment_Automation_Role
           aws-region: us-east-2
 
-      - name: Deploy Live Lambda Engine Updates
+      - name: Verify AWS Connection
+        run: aws sts get-caller-identity
+
+      - name: Inspect Lambda Application
+        shell: bash
         run: |
-          # 1. Create a lightweight production deployment package ignoring metadata and environments
-          zip -r function.zip . -x "*.git*" "*.github*" "README.md" "tests/*"
-          
-          # 2. Trigger the code binary compilation modification directly inside AWS storage systems
-          aws lambda update-function-code \
+          aws lambda get-function-configuration \
             --function-name soln-visa-connection-bridge \
-            --zip-file fileb://function.zip
-            
-          # 3. Synchronous Block: Wait for the asynchronous state change to flip to Active
-          echo "Waiting for Lambda function code deployment optimization to finish..."
-          aws lambda wait function-updated --function-name soln-visa-connection-bridge
-          echo "Deployment successfully confirmed!"
+            --region us-east-2 \
+            --query '{Runtime:Runtime,Handler:Handler,State:State,PackageType:PackageType}'
+
+      - name: Check Extracted Application
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "Checking Lambda source files..."
+
+          find extracted-aws -type f \
+            \( -name 'lambda_function.py' \
+            -o -name 'index.js' \
+            -o -name 'index.mjs' \
+            -o -name 'app.js' \)
+
+          echo "Extraction and inspection completed."
