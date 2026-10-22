@@ -1,0 +1,28 @@
+name: Automated Cloud-to-Cloud Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  DeployInfrastructure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate Securely with AWS Infrastructure
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::944870884457:role/GitHub_Cloud_Deployment_Automation_Role
+          aws-region: us-east-2
+
+      - name: Deploy Live Lambda Engine Updates
+        run: |
+          zip -r function.zip .
+          aws lambda update-function-code --function-name soln-visa-connection-bridge --zip-file fileb://function.zip
